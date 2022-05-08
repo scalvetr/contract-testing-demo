@@ -1,0 +1,36 @@
+GET {{base-url}}/v1/employees
+Accept: application/json
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body === "[]", "Response body is not an empty list");
+    });
+%}
+
+###
+POST {{base-url}}/v1/employees
+Content-Type: application/json
+
+{
+  "id": "1111111",
+  "name": "Number One",
+  "role": "The Boss"
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 201, "Response status is not 201");
+    });
+%}
+
+###
+GET {{base-url}}/v1/employees
+Accept: application/json
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body.length === 1, "Response body is not an empty list");
+    });
+%}
