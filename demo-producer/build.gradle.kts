@@ -23,6 +23,7 @@ extra["springCloudVersion"] = "2021.0.2"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -38,6 +39,7 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-webflux-ui:1.6.8")
     // https://github.com/pact-foundation/pact-jvm/issues/1529
     testImplementation("org.springframework.cloud:spring-cloud-contract-spec-kotlin")
+    testImplementation("org.springframework.boot:spring-boot-starter-web")
 }
 
 dependencyManagement {
