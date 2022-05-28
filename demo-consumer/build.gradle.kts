@@ -7,6 +7,7 @@ plugins {
     kotlin("jvm") version "1.6.0"
     kotlin("plugin.spring") version "1.6.0"
     id("org.springframework.experimental.aot") version "0.11.5"
+    id("org.springframework.cloud.contract") version "3.1.3"
 }
 
 group = "com.scalvetr"
@@ -30,7 +31,7 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
-    testImplementation("org.springframework.cloud:spring-cloud-starter-contract-verifier")
+    testImplementation("org.springframework.cloud:spring-cloud-starter-contract-stub-runner")
 
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     // spring doc
