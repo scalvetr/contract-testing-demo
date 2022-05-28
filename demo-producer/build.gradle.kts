@@ -30,7 +30,10 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude(module = "junit")
+        exclude(module = "mockito-core")
+    }
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.springframework.cloud:spring-cloud-starter-contract-verifier")
 
@@ -40,6 +43,9 @@ dependencies {
     // https://github.com/pact-foundation/pact-jvm/issues/1529
     testImplementation("org.springframework.cloud:spring-cloud-contract-spec-kotlin")
     testImplementation("org.springframework.boot:spring-boot-starter-web")
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("com.ninja-squad:springmockk:3.0.1")
 }
 
 dependencyManagement {
@@ -66,7 +72,11 @@ tasks.withType<BootBuildImage> {
 
 contracts {
     testFramework.set(org.springframework.cloud.contract.verifier.config.TestFramework.JUNIT5)
-    packageWithBaseClasses.set("com.scalvetr.demoproducer")
+    // uncomment to use EmployeeBase
+    //packageWithBaseClasses.set("com.scalvetr.demoproducer")
+    baseClassForTests.set("com.scalvetr.demoproducer.ContractBase")
+    testMode.set(org.springframework.cloud.contract.verifier.config.TestMode.EXPLICIT)
+
 }
 
 tasks.withType<Delete> {

@@ -6,23 +6,27 @@ import org.springframework.stereotype.Service
 
 @Service
 class EmployeeServiceImpl : EmployeeService {
-    var db: MutableMap<String, Employee> = hashMapOf()
+    var data: MutableMap<String, Employee> = hashMapOf()
 
     override suspend fun getById(id: String): Employee? {
-        return db[id]
+        return data[id]
     }
 
     override fun getAll(): Flow<Employee> {
         return flow {
-            db.entries.onEach { i -> emit(i.value) }
+            data.entries.onEach { i -> emit(i.value) }
         }
     }
 
     override suspend fun create(employee: Employee) {
-        db[employee.id] = employee
+        data[employee.id] = employee
     }
 
-    override suspend fun delete(id: String) {
-        db.remove(id)
+    override suspend fun delete(id: String): Boolean {
+        if (data.containsKey(id)) {
+            data.remove(id)
+            return true
+        }
+        return false
     }
 }

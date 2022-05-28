@@ -6,5 +6,5 @@ interface EmployeeService {
     suspend fun getById(id: String): Employee?
     fun getAll(): Flow<Employee>
     suspend fun create(employee: Employee)
-    suspend fun delete(id: String)
+    suspend fun delete(id: String): Boolean
 }

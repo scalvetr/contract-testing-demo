@@ -24,7 +24,10 @@ class EmployeeController(val employeeService: EmployeeService) {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    suspend fun delete(@PathVariable("id") id: String) =
-        employeeService.delete(id)
+    suspend fun delete(@PathVariable("id") id: String) {
+        if (!employeeService.delete(id)) {
+            throw NotFoundException()
+        }
+    }
 
 }

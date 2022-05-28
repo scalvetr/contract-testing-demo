@@ -4,6 +4,12 @@ Accept: application/json
 > {%
     client.test("Request executed successfully", function() {
         client.assert(response.status === 200, "Response status is not 200 (" + response.status + ")");
+    });
+    client.test("Response content-type is json", function() {
+        var type = response.contentType.mimeType;
+        client.assert(type === "application/json", "Expected 'application/json' but received '" + type + "'");
+    });
+    client.test("Request body is correct", function() {
         client.assert(response.body.length === 0, "Response body is not an empty list");
     });
 %}
@@ -31,6 +37,12 @@ Accept: application/json
 > {%
     client.test("Request executed successfully", function() {
         client.assert(response.status === 200, "Response status is not 200 (" + response.status + ")");
+    });
+    client.test("Response content-type is json", function() {
+        var type = response.contentType.mimeType;
+        client.assert(type === "application/json", "Expected 'application/json' but received '" + type + "'");
+    });
+    client.test("Request body is correct", function() {
         client.assert(response.body.length === 1, "Expected list length === 1");
     });
 %}
@@ -42,6 +54,12 @@ Accept: application/json
 > {%
     client.test("Request executed successfully", function() {
         client.assert(response.status === 200, "Response status is not 200 (" + response.status + ")");
+    });
+    client.test("Response content-type is json", function() {
+        var type = response.contentType.mimeType;
+        client.assert(type === "application/json", "Expected 'application/json' but received '" + type + "'");
+    });
+    client.test("Request body is correct", function() {
         client.assert(response.body.id === "000001", "Expected id 000001");
     });
 %}
@@ -52,7 +70,7 @@ Accept: application/json
 
 > {%
     client.test("Request executed successfully", function() {
-        client.assert(response.status === 204, "Response status is not 405 (" + response.status + ")");
+        client.assert(response.status === 204, "Response status is not 204 (" + response.status + ")");
     });
 %}
 
@@ -63,12 +81,28 @@ Accept: application/json
 > {%
     client.test("Request executed successfully", function() {
         client.assert(response.status === 200, "Response status is not 200 (" + response.status + ")");
+    });
+    client.test("Response content-type is json", function() {
+        var type = response.contentType.mimeType;
+        client.assert(type === "application/json", "Expected 'application/json' but received '" + type + "'");
+    });
+    client.test("Request body is correct", function() {
         client.assert(response.body.length === 0, "Response body is not an empty list");
     });
 %}
 
 ###
 GET {{base-url}}/v1/employees/000001
+Accept: application/json
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 404, "Response status is not 404 (" + response.status + ")");
+    });
+%}
+
+###
+DELETE {{base-url}}/v1/employees/000001
 Accept: application/json
 
 > {%

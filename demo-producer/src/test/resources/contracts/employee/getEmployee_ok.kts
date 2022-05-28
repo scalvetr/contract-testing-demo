@@ -1,4 +1,4 @@
-package employees
+package contracts.employee
 
 import org.springframework.cloud.contract.spec.ContractDsl.Companion.contract
 
