@@ -4,9 +4,10 @@ import io.restassured.config.EncoderConfig
 import io.restassured.module.mockmvc.RestAssuredMockMvc
 import io.restassured.module.mockmvc.config.RestAssuredMockMvcConfig
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.BeforeEach
 
-open class EmployeeBase {
+open class EmployeeBase(val data: MutableMap<String, Employee> = mutableMapOf()) {
     @BeforeEach
     fun setup() {
         val encoderConfig: EncoderConfig = EncoderConfig().appendDefaultContentCharsetToContentTypeIfUndefined(false)
@@ -16,21 +17,23 @@ open class EmployeeBase {
     }
 
     private fun stubbedEmployeeService(): EmployeeService {
+
         return object : EmployeeService {
             override suspend fun getById(id: String): Employee {
-                return Employee(
-                    id = "12345",
-                    name = "Name1",
-                    role = "Role1"
-                )
+                return data[id]!!
             }
 
             override fun getAll(): Flow<Employee> {
-                TODO("Not yet implemented")
+                return flow {
+                    data.values.forEach {
+                        emit(it)
+                    }
+                }
+
             }
 
-            override suspend fun create(employee: Employee): Any {
-                TODO("Not yet implemented")
+            override suspend fun create(employee: Employee) {
+                data[employee.id] = employee;
             }
         }
     }

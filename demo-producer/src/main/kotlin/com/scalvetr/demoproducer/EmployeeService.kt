@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.Flow
 interface EmployeeService {
     suspend fun getById(id: String): Employee
     fun getAll(): Flow<Employee>
-    suspend fun create(employee: Employee): Any
+    suspend fun create(employee: Employee)
 }

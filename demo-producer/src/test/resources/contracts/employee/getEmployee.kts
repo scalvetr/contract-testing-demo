@@ -5,7 +5,7 @@ import org.springframework.cloud.contract.spec.ContractDsl.Companion.contract
 contract {
     request {
         method = GET
-        url = url("/employees")
+        url = url("/v1/employees")
         headers {
             accept = "application/json"
         }
