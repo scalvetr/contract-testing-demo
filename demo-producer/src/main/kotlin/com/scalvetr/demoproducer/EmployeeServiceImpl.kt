@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service
 class EmployeeServiceImpl : EmployeeService {
     var db: MutableMap<String, Employee> = hashMapOf()
 
-    override suspend fun getById(id: String): Employee {
-        return db[id] ?: throw IllegalStateException("Employee not found")
+    override suspend fun getById(id: String): Employee? {
+        return db[id]
     }
 
     override fun getAll(): Flow<Employee> {
@@ -20,5 +20,9 @@ class EmployeeServiceImpl : EmployeeService {
 
     override suspend fun create(employee: Employee) {
         db[employee.id] = employee
+    }
+
+    override suspend fun delete(id: String) {
+        db.remove(id)
     }
 }

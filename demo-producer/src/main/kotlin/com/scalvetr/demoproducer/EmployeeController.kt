@@ -11,7 +11,7 @@ class EmployeeController(val employeeService: EmployeeService) {
 
     @GetMapping("/{id}")
     suspend fun get(@PathVariable("id") id: String): Employee =
-        employeeService.getById(id)
+        employeeService.getById(id) ?: throw NotFoundException()
 
     @GetMapping("")
     fun get(): Flow<Employee> =
@@ -21,5 +21,10 @@ class EmployeeController(val employeeService: EmployeeService) {
     @ResponseStatus(code = HttpStatus.CREATED)
     suspend fun create(@RequestBody employee: Employee) =
         employeeService.create(employee)
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    suspend fun delete(@PathVariable("id") id: String) =
+        employeeService.delete(id)
 
 }

@@ -3,8 +3,8 @@ Accept: application/json
 
 > {%
     client.test("Request executed successfully", function() {
-        client.assert(response.status === 200, "Response status is not 200");
-        client.assert(response.body === "[]", "Response body is not an empty list");
+        client.assert(response.status === 200, "Response status is not 200 (" + response.status + ")");
+        client.assert(response.body.length === 0, "Response body is not an empty list");
     });
 %}
 
@@ -13,14 +13,14 @@ POST {{base-url}}/v1/employees
 Content-Type: application/json
 
 {
-  "id": "1111111",
-  "name": "Number One",
-  "role": "The Boss"
+  "id": "000001",
+  "name": "Name",
+  "role": "ROLE1"
 }
 
 > {%
     client.test("Request executed successfully", function() {
-        client.assert(response.status === 201, "Response status is not 201");
+        client.assert(response.status === 201, "Response status is not 201 (" + response.status + ")");
     });
 %}
 
@@ -30,7 +30,49 @@ Accept: application/json
 
 > {%
     client.test("Request executed successfully", function() {
-        client.assert(response.status === 200, "Response status is not 200");
-        client.assert(response.body.length === 1, "Response body is not an empty list");
+        client.assert(response.status === 200, "Response status is not 200 (" + response.status + ")");
+        client.assert(response.body.length === 1, "Expected list length === 1");
+    });
+%}
+
+###
+GET {{base-url}}/v1/employees/000001
+Accept: application/json
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200 (" + response.status + ")");
+        client.assert(response.body.id === "000001", "Expected id 000001");
+    });
+%}
+
+###
+DELETE {{base-url}}/v1/employees/000001
+Accept: application/json
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 204, "Response status is not 405 (" + response.status + ")");
+    });
+%}
+
+###
+GET {{base-url}}/v1/employees
+Accept: application/json
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200 (" + response.status + ")");
+        client.assert(response.body.length === 0, "Response body is not an empty list");
+    });
+%}
+
+###
+GET {{base-url}}/v1/employees/000001
+Accept: application/json
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 404, "Response status is not 404 (" + response.status + ")");
     });
 %}

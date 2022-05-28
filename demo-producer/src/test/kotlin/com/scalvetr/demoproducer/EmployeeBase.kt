@@ -14,13 +14,14 @@ open class EmployeeBase(val data: MutableMap<String, Employee> = mutableMapOf())
         val restAssuredConf: RestAssuredMockMvcConfig = RestAssuredMockMvcConfig().encoderConfig(encoderConfig)
         RestAssuredMockMvc.config = restAssuredConf
         RestAssuredMockMvc.standaloneSetup(EmployeeController(stubbedEmployeeService()))
+        data["000001"] = Employee("000001", "Name", "ROLE1")
     }
 
     private fun stubbedEmployeeService(): EmployeeService {
 
         return object : EmployeeService {
-            override suspend fun getById(id: String): Employee {
-                return data[id]!!
+            override suspend fun getById(id: String): Employee? {
+                return data[id]
             }
 
             override fun getAll(): Flow<Employee> {
@@ -34,6 +35,10 @@ open class EmployeeBase(val data: MutableMap<String, Employee> = mutableMapOf())
 
             override suspend fun create(employee: Employee) {
                 data[employee.id] = employee;
+            }
+
+            override suspend fun delete(id: String) {
+                data.remove(id)
             }
         }
     }

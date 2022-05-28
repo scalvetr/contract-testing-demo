@@ -4,21 +4,18 @@ import org.springframework.cloud.contract.spec.ContractDsl.Companion.contract
 
 contract {
     request {
-        method = GET
+        method = POST
         url = url("/v1/employees")
-        headers {
-            accept = "application/json"
-        }
-    }
-    response {
-        status = OK
         body = body(
             "id" to value(regex("[0-9]{10}")),
-            "name" to "Name1",
-            "role" to "Role1"
+            "name" to value(regex("[0-9 a-z A-Z]*")),
+            "role" to value(regex("[0-9 a-z A-Z]*"))
         )
         headers {
             contentType = "application/json"
         }
+    }
+    response {
+        status = CREATED
     }
 }
