@@ -2,13 +2,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 plugins {
-    id("org.springframework.boot") version "2.7.0"
+    id("org.springframework.boot") version "2.6.8"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    id("org.springframework.cloud.contract") version "4.0.0-M2"
-    // https://github.com/spring-cloud/spring-cloud-contract/blob/v3.1.2/pom.xml
     kotlin("jvm") version "1.6.0"
     kotlin("plugin.spring") version "1.6.0"
-    id("org.springframework.experimental.aot") version "0.11.4"
+    id("org.springframework.experimental.aot") version "0.11.5"
+    id("org.springframework.cloud.contract") version "3.1.3"
 }
 
 group = "com.scalvetr"
@@ -17,38 +16,26 @@ java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
     maven { url = uri("https://repo.spring.io/release") }
-    maven { url = uri("https://repo.spring.io/milestone") }
     mavenCentral()
-    mavenLocal()
 }
 
-extra["springCloudVersion"] = "2022.0.0-M2"
+extra["springCloudVersion"] = "2021.0.2"
 
-dependencyManagement {
-    dependencies {
-        dependency("io.rest-assured:rest-assured:5.0.0")
-        dependency("io.rest-assured:json-path:5.0.0")
-        dependency("io.rest-assured:xml-path:5.0.0")
-        dependency("org.apache.groovy:groovy:4.0.1")
-        dependency("org.apache.groovy:groovy-xml:4.0.1")
-        dependency("org.apache.groovy:groovy-json:4.0.1")
-    }
-}
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-    implementation("org.springframework.cloud:spring-cloud-starter")
-    // spring doc
-    implementation("org.springdoc:springdoc-openapi-webflux-ui:1.6.8")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.springframework.cloud:spring-cloud-starter-contract-verifier")
+
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    // spring doc
+    implementation("org.springdoc:springdoc-openapi-webflux-ui:1.6.8")
     // https://github.com/pact-foundation/pact-jvm/issues/1529
     testImplementation("org.springframework.cloud:spring-cloud-contract-spec-kotlin")
 }
