@@ -1,4 +1,4 @@
-package com.scalvetr.demoproducer
+package com.scalvetr.demoproducer.service
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

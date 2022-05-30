@@ -8,6 +8,7 @@ plugins {
     kotlin("plugin.spring") version "1.6.0"
     id("org.springframework.experimental.aot") version "0.11.5"
     id("org.springframework.cloud.contract") version "3.1.3"
+    id("maven-publish")
 }
 
 group = "com.scalvetr"
@@ -16,6 +17,7 @@ java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
     maven { url = uri("https://repo.spring.io/release") }
+    mavenLocal()
     mavenCentral()
 }
 
@@ -79,13 +81,6 @@ contracts {
 
 }
 
-tasks.withType<Delete> {
-    doFirst {
-        delete("~/.m2/repository/com/scalvetr/demo-producer")
-    }
-}
-
-
 tasks {
     contractTest {
         useJUnitPlatform()
@@ -103,5 +98,26 @@ tasks {
             } else { /* Nothing to do here */
             }
         }))
+    }
+}
+
+val sourcesJar by tasks.registering(Jar::class) {
+    archiveClassifier.set("sources")
+    from(sourceSets.main.get().allSource)
+}
+
+// maven - publish
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            artifact(sourcesJar)
+            artifact(tasks.named<Jar>("verifierStubsJar").get())
+            from(components["java"])
+        }
+    }
+}
+tasks.withType<Delete> {
+    doFirst {
+        delete("~/.m2/repository/com/scalvetr/demo-producer")
     }
 }

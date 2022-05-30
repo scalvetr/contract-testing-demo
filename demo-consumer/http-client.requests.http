@@ -1,0 +1,60 @@
+###
+POST {{employee-service-base-url}}/v1/employees
+Content-Type: application/json
+
+{
+  "id": "000001",
+  "name": "Name",
+  "role": "ROLE1"
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 201, "Response status is not 201 (" + response.status + ")");
+    });
+%}
+
+###
+GET {{employee-service-base-url}}/v1/employees/000001
+Accept: application/json
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200 (" + response.status + ")");
+    });
+    client.test("Response content-type is json", function() {
+        var type = response.contentType.mimeType;
+        client.assert(type === "application/json", "Expected 'application/json' but received '" + type + "'");
+    });
+    client.test("Request body is correct", function() {
+        client.assert(response.body.id === "000001", "Expected id 000001");
+    });
+%}
+
+###
+POST {{base-url}}/v1/calendar/vacations
+Content-Type: application/json
+
+{
+  "requester": "000001",
+  "fromDate": "2022-08-01",
+  "toDate": "2022-08-31",
+  "status": "PENDING"
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 201, "Response status is not 201 (" + response.status + ")");
+    });
+%}
+
+
+###
+DELETE {{employee-service-base-url}}/v1/employees/000001
+Accept: application/json
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 204, "Response status is not 204 (" + response.status + ")");
+    });
+%}

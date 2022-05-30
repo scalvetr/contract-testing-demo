@@ -1,9 +1,10 @@
 package com.scalvetr.demoproducer
 
 import com.ninjasquad.springmockk.MockkBean
+import com.scalvetr.demoproducer.service.Employee
+import com.scalvetr.demoproducer.service.EmployeeService
 import io.mockk.coEvery
 import io.restassured.RestAssured
-import io.restassured.module.mockmvc.RestAssuredMockMvc
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.BeforeEach

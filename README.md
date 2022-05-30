@@ -2,7 +2,7 @@
 
 ## :gear: Build
 
-Build the project
+Build the producer project
 ```shell
 cd demo-producer
 ./gradlew build
@@ -15,6 +15,24 @@ ls build/libs
 # demo-producer-0.0.1-SNAPSHOT-plain.jar
 # demo-producer-0.0.1-SNAPSHOT-stubs.jar
 # demo-producer-0.0.1-SNAPSHOT.jar
+```
+
+Deploy the producer project to local maven
+```shell
+./gradlew build publishToMavenLocal
+# check tha library has been deployed
+ls -lart  ~/.m2/repository/com/scalvetr/demo-producer/0.0.1-SNAPSHOT
+# demo-producer-0.0.1-SNAPSHOT.pom
+# demo-producer-0.0.1-SNAPSHOT-sources.jar
+# demo-producer-0.0.1-SNAPSHOT-stubs.jar
+# demo-producer-0.0.1-SNAPSHOT.module
+# demo-producer-0.0.1-SNAPSHOT-plain.jar
+```
+
+Build the consumer project
+```shell
+cd ../demo-consumer
+./gradlew build
 ```
 
 ## :rocket: Run

@@ -1,4 +1,4 @@
-package com.scalvetr.demoproducer
+package com.scalvetr.democonsumer.webclient
 
 data class Employee(
     val id: String,

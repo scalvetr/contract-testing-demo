@@ -1,5 +1,7 @@
 package com.scalvetr.demoproducer
 
+import com.scalvetr.demoproducer.service.Employee
+import com.scalvetr.demoproducer.service.EmployeeService
 import io.restassured.config.EncoderConfig
 import io.restassured.module.mockmvc.RestAssuredMockMvc
 import io.restassured.module.mockmvc.config.RestAssuredMockMvcConfig
