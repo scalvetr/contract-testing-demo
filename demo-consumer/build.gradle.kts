@@ -39,6 +39,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     // spring doc
     implementation("org.springdoc:springdoc-openapi-webflux-ui:1.6.8")
+
+    testImplementation("com.scalvetr:demo-producer:0.0.1-SNAPSHOT:stubs") {
+        isTransitive = false
+    }
 }
 
 dependencyManagement {
